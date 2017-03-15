@@ -43,10 +43,9 @@ public class App
         File inFile = new File("C:\\radarPage.txt");
         FileProcessor processor  = injector.getInstance(ImageFileProcessor.class);
         int[][] oldMatrix = processor.fileTo2D(inFile);
-
         for(ImageElement croppedImage : imageObjectFinder.find(new Image(oldMatrix)).keySet()) {
             Point startingPct = croppedImage.getStartingPoint();
-            System.out.println(MessageFormat.format("Found {0}% match space invader at point ({},{})", startingPct.getX(), startingPct.getY()));
+            System.out.println(MessageFormat.format("Found space invader at point ({0},{1})", startingPct.getX(), startingPct.getY()));
         }
     }
 }

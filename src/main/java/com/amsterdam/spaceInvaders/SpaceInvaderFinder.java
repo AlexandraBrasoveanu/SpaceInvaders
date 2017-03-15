@@ -15,13 +15,12 @@ import java.util.Map;
  * Created by Alexandra on 3/13/2017.
  */
 public class SpaceInvaderFinder implements ObjectFinder {
+    private final static int MINIMUM_MATCH_REQ = 50;
     private List<int[][]> spaceInvaders;
-    private FileProcessor processor;
 
     @Inject
-    public SpaceInvaderFinder(@Named("SpaceInvaderPattern") List<int[][]> spaceInvaders, FileProcessor fileProcessor) {
+    public SpaceInvaderFinder(@Named("SpaceInvaderPattern") List<int[][]> spaceInvaders) {
         this.spaceInvaders = spaceInvaders;
-        this.processor = fileProcessor;
     }
 
     @Override
@@ -34,8 +33,8 @@ public class SpaceInvaderFinder implements ObjectFinder {
             ImageElement spaceInvader = new ImageElement(originalObject);
             for(ImageElement imageObject : blocks) {
                 float percentage = imageComparer.getSimilarityPercentage(imageObject, spaceInvader);
-                if(percentage > 50) {
-                spaceInvaderMapLocation.put(spaceInvader, imageObject);
+                if(percentage > MINIMUM_MATCH_REQ) {
+                    spaceInvaderMapLocation.put(imageObject, spaceInvader);
                 }
             }
         }

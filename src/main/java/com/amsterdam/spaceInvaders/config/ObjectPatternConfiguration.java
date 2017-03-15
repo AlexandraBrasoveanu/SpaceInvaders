@@ -23,9 +23,9 @@ import java.util.List;
  */
 public class ObjectPatternConfiguration extends AbstractModule {
 
-    private final String BACKGROUND_PROP = "background";
-    private final String FOREGROUND_PROP = "foreground";
-    private final String SPACE_INVADER_PROP = "spaceInvader";
+    private final static String BACKGROUND_PROP = "background";
+    private final static String FOREGROUND_PROP = "foreground";
+    private final static String SPACE_INVADER_PROP = "spaceInvader";
 
     @Override
     protected void configure() {
@@ -83,7 +83,6 @@ public class ObjectPatternConfiguration extends AbstractModule {
 
         //combine the arrays split by semicolon and transform to int
         for(int i = 0;i < a.length;i++) {
-
             for(int j = 0;j < a[i].length(); j++) {
                 if (!Character.isDigit(a[i].charAt(j))) {
                     throw new InvalidParameterException(MessageFormat.format("Malformed value for property {0}!", propertyName));

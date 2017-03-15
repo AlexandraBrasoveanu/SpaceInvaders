@@ -7,6 +7,11 @@ import java.util.List;
  * Created by Alexandra on 3/11/2017.
  */
 
+/**
+ * This class represents the disjoint union sets data structure and utility methods for
+ * adding and extracting information from the data structure
+ */
+
 public class DisjointUnionSets {
     private List<Integer>  parent;
 
@@ -21,6 +26,11 @@ public class DisjointUnionSets {
         parent.add(i,i);
     }
 
+    /**
+     * Finds the representative of the set that i is an element of
+     * @param i element
+     * @return representative of the set containing i
+     */
     public int find(int i)
     {
         // If i is the parent of itself
@@ -39,20 +49,17 @@ public class DisjointUnionSets {
         }
     }
 
-    // Unites the set that includes i and the set that includes j
+    /**
+     * Unites the set that includes i and the set that includes j
+      */
+
     public void union(int i, int j)
     {
-        // Find the representatives (or the root nodes) for the set
-        // that includes i
-
+        // Find the representatives (or the root nodes) for the set that includes i
         int irep = this.find(i);
-
-        // And do the same for the set
-        // that includes j
+        // And do the same for the set that includes j
         int jrep = this.find(j);
-
-        // Make the parent of i’s representative
-        // be j’s  representative effectively
+        // Make the parent of i’s representative be j’s  representative effectively
         // moving all of i’s set into j’s set)
         this.parent.set(irep, jrep);
     }
