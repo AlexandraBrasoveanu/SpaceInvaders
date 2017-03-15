@@ -27,16 +27,21 @@ public class ObjectPatternConfiguration extends AbstractModule {
     private final static String FOREGROUND_PROP = "foreground";
     private final static String SPACE_INVADER_PROP = "spaceInvader";
 
+    /**
+     * Loads the space invaders properties from the configuration files.
+     */
     @Override
     protected void configure() {
         Parameters params = new Parameters();
         try {
+            // load the configuration file
             FileBasedConfigurationBuilder<FileBasedConfiguration> builder =
                     new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class)
                             .configure(params.properties()
                                     .setFileName("spaceInvader.properties"));
             Configuration config = builder.getConfiguration();
             String foreground = config.getString(FOREGROUND_PROP);
+            // read the background and foreground configs
             if(StringUtils.isEmpty(foreground)) {
                 throw new InvalidParameterException(MessageFormat.format("No value for property {0}!", FOREGROUND_PROP));
             }
@@ -46,6 +51,9 @@ public class ObjectPatternConfiguration extends AbstractModule {
             }
             List<int[][]> valueList = new ArrayList<>();
             String[] configValue = config.getStringArray(SPACE_INVADER_PROP);
+            // simplify the matrix containing the space invaders original patterns
+            //by replacing the background and foreground elements with
+            //1s and 0s
             for(String si: configValue) {
                 si = si.replace(background, "0");
                 si = si.replace(foreground, "1");
