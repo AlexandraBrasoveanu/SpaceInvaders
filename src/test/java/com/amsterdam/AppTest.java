@@ -1,4 +1,4 @@
-package com.companyname.testsimple;
+package com.amsterdam;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -1,17 +1,19 @@
 package com.amsterdam;
 
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
 /**
- * Created by Arwen on 3/16/2017.
+ * Created by Alexandra on 3/16/2017.
  */
 public class TestImage {
+    private Image testimage;
 
-    @Test
-    public void testComputeElementsSum() {
+    @Before
+    public void setup() {
         // Create matrix with values
         // [ 0, 1, 2
         //   1, 2, 3
@@ -24,10 +26,27 @@ public class TestImage {
                 testMatrix[x][y] = x + y;
             }
         }
-        Image testimage = new Image(testMatrix);
+        testimage = new Image(testMatrix);
+    }
+
+    @Test
+    public void testComputeElementsSum() {
         int result = testimage.computeElementsSum();
         assertEquals(18, result);
     }
 
+    @Test
+    public void testIsValidPointOutOfBoundary() {
+        assertEquals(false, testimage.isFilledSpace(5,0));
+    }
 
+    @Test
+    public void testIsValidPointFalse() {
+        assertEquals(false, testimage.isFilledSpace(0,0));
+    }
+
+    @Test
+    public void testIsValidPointTrue() {
+        assertEquals(true, testimage.isFilledSpace(1,2));
+    }
 }
