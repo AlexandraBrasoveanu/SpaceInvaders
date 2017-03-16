@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
 /**
- * Created by Arwen on 3/16/2017.
+ * Created by Alexandra on 3/16/2017.
  */
 public class MatrixFormatter {
     private String background;

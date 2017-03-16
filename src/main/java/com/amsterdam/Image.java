@@ -55,7 +55,7 @@ public class Image {
     }
 
     public boolean isFilledSpace(int x, int y) {
-        return isValidPoint(x, y) && data[x][y] == 1;
+        return isValidPoint(x, y) && data[x][y] >= 1;
     }
 
     private boolean isValidPoint(int x, int y) {
