@@ -11,6 +11,7 @@ import com.util.MatrixFormatter;
 import com.util.Point;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.MessageFormat;
 import java.util.Map;
 
@@ -25,7 +26,14 @@ public class App
         //read and process input file containing the radar image
         File inFile = new File("radarPage.txt");
         FileProcessor processor  = injector.getInstance(ImageFileProcessor.class);
-        Image imageMatrix = new Image(processor.fileTo2D(inFile));
+
+        Image imageMatrix = null;
+        try {
+            imageMatrix = new Image(processor.fileTo2D(inFile));
+        } catch (FileNotFoundException e) {
+            System.out.println("Problem reading the original image");
+            System.exit(1);
+        }
 
         // find a list of the best matching image elements and the corresponding originals
         Map<ImageElement, ImageElement> detectionMapping = imageObjectFinder.find(imageMatrix);
