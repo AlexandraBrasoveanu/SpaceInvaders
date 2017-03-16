@@ -23,15 +23,26 @@ public class Image {
         return data[0].length;
     }
 
-    public int getLength() {
+    public int getHeight() {
         return data.length;
     }
 
-    public Image computeUnionMatrix(int row, int col, Image toCompare) {
-        int[][] dest = new int[Math.max(getLength(), toCompare.getLength())][Math.max(getWidth(), toCompare.getWidth())];
-        for(int i = row, k = 0; i < Math.min(getLength(), toCompare.getLength()); i++, k++) {
-            for(int j = col, l = 0; j < Math.min(getWidth(), toCompare.getWidth()); j++, l++) {
-                if(toCompare.get(k,l) >= 1 && this.get(i,j) >= 1 || toCompare.get(k,l) == 0 && this.get(i,j) == 0) {
+    /**
+     * Computes a result matrix after comparing each value and checking if they correspond.
+     * Two values are considered a match if they are both 0 or both bigger than 0. The resulting
+     * matrix will hold 1s for the cells that match, and 0 for the ones that do not.
+     * The comparison is done from the specified row and column of the current object with the 0,0 position
+     * of the other matrix.
+     * @param row int that specifies at which row the comparison of the current object starts
+     * @param col int that specified at which column the comparisor of the current object starts
+     * @param otherImg the image object holding the matrix to compare against
+     * @return wrapper around an int matrix containing 1s and 0s only
+     */
+    public Image computeUnionMatrix(int row, int col, Image otherImg) {
+        int[][] dest = new int[Math.max(getHeight(), otherImg.getHeight())][Math.max(getWidth(), otherImg.getWidth())];
+        for(int i = row, k = 0; i < Math.min(getHeight(), otherImg.getHeight()); i++, k++) {
+            for(int j = col, l = 0; j < Math.min(getWidth(), otherImg.getWidth()); j++, l++) {
+                if(otherImg.get(k,l) >= 1 && this.get(i,j) >= 1 || otherImg.get(k,l) == 0 && this.get(i,j) == 0) {
                     dest[k][l] = 1;
                 }
             }
@@ -48,12 +59,13 @@ public class Image {
     }
 
     private boolean isValidPoint(int x, int y) {
-        return x >=0 && x < getLength() && y >=0 && y < getWidth();
+        return x >=0 && x < getHeight() && y >=0 && y < getWidth();
 
     }
 
     public int[][] getData() {
         return data;
     }
+
 
 }

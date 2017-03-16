@@ -23,6 +23,15 @@ public class SpaceInvaderFinder implements ObjectFinder {
         this.spaceInvaders = spaceInvaders;
     }
 
+    /**
+     * Take an image in the form of an int matrix wrapper and returns a hashmap containing
+     * pairs of the element that was matched and the certain part of the image
+     * where it was found. The minimum procentage for the match to be successful
+     * is 50%
+     * @param radarImage original image processed into an int matrix containing 1s and 0s
+     * @return hashmap containing pairs of the original space invader and the piece of
+     *          image where it was found
+     */
     @Override
     public Map<ImageElement, ImageElement> find(Image radarImage) {
         ImageSeparator imageSeparator = new ImageSeparator();

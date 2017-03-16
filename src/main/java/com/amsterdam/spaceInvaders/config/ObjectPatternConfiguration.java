@@ -59,7 +59,6 @@ public class ObjectPatternConfiguration extends AbstractModule {
                 si = si.replace(foreground, "1");
                 int[][] siMatrix = fetchArrayFromPropValue(si, SPACE_INVADER_PROP);
                 valueList.add(siMatrix);
-                System.out.print(si);
             }
 
             //binding configuration values to keys to be injected

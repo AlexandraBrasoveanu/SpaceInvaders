@@ -2,7 +2,6 @@ package com.amsterdam.services;
 
 import com.amsterdam.Image;
 import com.amsterdam.ImageElement;
-import com.util.Point;
 
 /**
  * Created by Alexandra on 3/12/2017.
@@ -24,19 +23,21 @@ public class ImageComparerImpl implements ImageComparer {
     public float getSimilarityPercentage(ImageElement croppedImg, ImageElement originalImage) {
         Image unionMatrix;
         int widthDiff = croppedImg.getWidth() - originalImage.getWidth(),
-                lengthDiff = croppedImg.getLength() - originalImage.getLength(),
-                correctMatrixSum = originalImage.getLength() * originalImage.getWidth();
+                heightDiff = croppedImg.getHeight() - originalImage.getHeight();
         float bestMatch = 0f;
-        Point bestPositionOff = new Point(0,0);
-        if(widthDiff >= 0 && lengthDiff >=0) { // if source matrix is larger we adjust the starting point
-            for(int i = 0; i <= widthDiff; i++) {
-                for(int j = 0; j <= lengthDiff; j++) {
-                    unionMatrix = croppedImg.computeUnionMatrix(i, j, originalImage); //
-                    float currentMatch = getPercentage(unionMatrix.computeElementsSum(), correctMatrixSum) ;
-                    bestMatch = currentMatch > bestMatch ? currentMatch : bestMatch; // remember the best match
-                    bestPositionOff.setX(i);
-                    bestPositionOff.setY(j); // record the offset position
+        int originalWidth = originalImage.getWidth();
+        int originalHeight = originalImage.getHeight();
+        for(int i = 0; i <= Math.abs(widthDiff); i++) {
+            for(int j = 0; j <= Math.abs(heightDiff); j++) {
+                ImageElement croppedOriginalImage = originalImage;
+                // if cropped image is smaller than the original image and it has at least an edge it is a valid candidate
+                if(croppedImg.isEdge() && (widthDiff < 0 && heightDiff < 0)) {
+                    croppedOriginalImage = croppedOriginalImage.getElement(i, j, originalHeight - i, originalWidth - j);
                 }
+                int correctMatrixSum = croppedOriginalImage.getHeight() * croppedOriginalImage.getWidth();
+                unionMatrix = croppedImg.computeUnionMatrix(i, j, croppedOriginalImage); //
+                float currentMatch = getPercentage(unionMatrix.computeElementsSum(), correctMatrixSum) ;
+                bestMatch = currentMatch > bestMatch ? currentMatch : bestMatch; // remember the best match
             }
         }
 //        croppedImg = croppedImg.getElementByOffset(bestPositionOff.getX(), bestPositionOff.getY());
@@ -45,7 +46,7 @@ public class ImageComparerImpl implements ImageComparer {
 
     /**
      * Utility method to compute a percentage from total
-     * @param n propotion to be computed
+     * @param n proportion to be computed
      * @param total the total number
      * @return percentage out of 100
      */
@@ -53,4 +54,5 @@ public class ImageComparerImpl implements ImageComparer {
         float proportion = ((float) n) / ((float) total);
         return proportion * 100;
     }
+
 }

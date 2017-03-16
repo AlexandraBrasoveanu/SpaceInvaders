@@ -41,10 +41,10 @@ public class ImageSeparator implements MatrixBlockExtractor {
      */
     private void identifyBlocks(Image snapshot) {
         DisjointUnionSets linked = new DisjointUnionSets();
-        labels = new int[snapshot.getLength()][snapshot.getWidth()];
+        labels = new int[snapshot.getHeight()][snapshot.getWidth()];
         int nextLabel = 1;
 
-        for(int row = 0; row < snapshot.getLength(); row++) {
+        for(int row = 0; row < snapshot.getHeight(); row++) {
             for(int col = 0; col < snapshot.getWidth(); col++) {
                 if(!snapshot.isFilledSpace(row,col)) {
                     continue;
@@ -68,7 +68,7 @@ public class ImageSeparator implements MatrixBlockExtractor {
                 }
             }
         }
-        for(int row = 0; row < snapshot.getLength(); row++) {
+        for(int row = 0; row < snapshot.getHeight(); row++) {
             for(int col = 0; col < snapshot.getWidth(); col++) {
                 if(!snapshot.isFilledSpace(row, col)) {
                     continue;

@@ -2,18 +2,13 @@ package com.amsterdam;
 
 import com.util.Point;
 
+
 /**
  * Created by Alexandra on 3/11/2017.
  */
 public class ImageElement extends Image {
     private int x, y, columns, rows;
-    private Edge edge;
-    public enum Edge {
-        TOP,
-        BOTTOM,
-        LEFT,
-        RIGHT
-    }
+    private boolean edge;
 
     public ImageElement(int[][] matrix) {
         super(matrix);
@@ -21,16 +16,19 @@ public class ImageElement extends Image {
         this.y = 0;
         this.columns = matrix.length;
         this.rows = matrix.length;
-        edge = null;
+        this.edge = false;
     }
 
+    /**
+     * Constructor that takes a new matrix and sets the points from where is was cropped
+     */
     public ImageElement(int[][] matrix, int x, int y, int columns, int rows) {
         super(matrix);
         this.x = x;
         this.y = y;
         this.columns = columns;
         this.rows = rows;
-
+        edge = x == 0 || y == 0 || x + rows == matrix.length || y + rows == matrix[0].length;
     }
 
     /**
@@ -69,6 +67,7 @@ public class ImageElement extends Image {
         return this.getElement(x1, y1, rows, columns);
     }
 
+
     public ImageElement getElementByOffset(int xOff, int yOff) {
         return getElement(this.x + xOff, this.y + yOff, this.rows - xOff, this.columns - yOff);
     }
@@ -77,23 +76,8 @@ public class ImageElement extends Image {
         return new Point(x,y);
     }
 
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                sb.append(data[i][j]);
-                if (data[i][j] < 10) { // TODO remove this nonsense
-                    sb.append("  ");
-                } else if(data[i][j] < 100){
-                    sb.append(" ");
-                }
-                sb.append(" ");
 
-            }
-            sb.append("\n");
-        }
-        sb.setLength(sb.length() - 1);
-        return sb.toString();
+    public boolean isEdge() {
+        return edge;
     }
-
 }
