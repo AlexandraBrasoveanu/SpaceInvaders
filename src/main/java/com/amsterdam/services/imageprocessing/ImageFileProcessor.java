@@ -26,31 +26,27 @@ public class ImageFileProcessor implements FileProcessor {
      * @param inFile File object containing the input image
      * @return result matrix containing 1s and 0s only
      */
-    public int[][] fileTo2D(File inFile) {
+    public int[][] fileTo2D(File inFile) throws FileNotFoundException {
         int[][] matrix;
-        try {
-            Scanner in = new Scanner(inFile);
-            char[] length = in.nextLine().trim().toCharArray();
-            int intLength = length.length;
-            int lineCount = 1;
-            while(in.hasNextLine()) {
-                lineCount++;
-                in.nextLine();
-            }
-            in.close();
-            in = new Scanner(inFile);
-            matrix = new int[lineCount][intLength];
-            lineCount = 0;
-            while (in.hasNextLine()) {
-                char[] currentLine = in.nextLine().trim().toCharArray();
-                matrix[lineCount++] = simplifyArray(currentLine);
-            }
-            in.close();
-            return matrix;
-        } catch (FileNotFoundException e) {
-            System.out.println("Problem reading the original image");
+        Scanner in = new Scanner(inFile);
+        char[] length = in.nextLine().trim().toCharArray();
+        int intLength = length.length;
+        int lineCount = 1;
+        while(in.hasNextLine()) {
+            lineCount++;
+            in.nextLine();
         }
-        return new int[0][];
+        in.close();
+        in = new Scanner(inFile);
+        matrix = new int[lineCount][intLength];
+        lineCount = 0;
+        while (in.hasNextLine()) {
+            char[] currentLine = in.nextLine().trim().toCharArray();
+            matrix[lineCount++] = simplifyArray(currentLine);
+        }
+        in.close();
+        return matrix;
+
     }
 
     /**
